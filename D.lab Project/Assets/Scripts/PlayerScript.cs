@@ -8,22 +8,34 @@ public class PlayerScript : MonoBehaviour
     public float speed;
     private float moveInput;
     private float moveInput2;
+    CharacterController controller;
+    public bool isSprinting = false;
+    float sprintSpeed;
+    float OGspeed;
 
     public Transform cam;
     public float mouseSensitivity;
     private float cameraPitch = 0f;
     bool lockCursor = true;
+    [SerializeField][Range(0.0f,0.5f)]float mouseSmoothVelocity;
+    [SerializeField][Range(0.0f,0.5f)]float mouseSmoothTime;
+    Vector2 currentMouseDelta = Vector2.zero;
+    Vector2 currentMouseDeltaVelocity = Vector2.zero;
 
-
-    public float turnSmoothTime = 0f;
-    public float turnSmoothVelocity;
+    [SerializeField][Range(0.0f,0.5f)]float moveSmoothVelocity = 0.3f;
+    Vector2 currentDir = Vector2.zero;
+    Vector2 currentDirVelocity = Vector2.zero;
+    
 
 
 
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-
+        controller = GetComponent<CharacterController>();
+        OGspeed = speed;
+        sprintSpeed = speed * 1.5f;
+    
         if(lockCursor){
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -36,29 +48,42 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            moveInput = Input.GetAxisRaw("Horizontal");
-            moveInput2 = Input.GetAxisRaw("Vertical");
-            Vector2 direction = new Vector2(moveInput, moveInput2).normalized;
-            Vector3 move = (transform.forward * direction.y + transform.right * direction.x) * speed;
-            rb.velocity = (move * Time.deltaTime);
+    Movement();
+    CamMovement();
+    }
+
+    void Movement(){
+        moveInput = Input.GetAxisRaw("Horizontal");
+        moveInput2 = Input.GetAxisRaw("Vertical");
+        Vector2 direction = new Vector2(moveInput, moveInput2).normalized;
+        currentDir = Vector2.SmoothDamp(currentDir, direction, ref currentDirVelocity, moveSmoothVelocity);
+        Vector3 move = (transform.forward * currentDir.y + transform.right * currentDir.x) * speed;
+        controller.Move(move * Time.deltaTime);
 
 
+        if(Input.GetKey(KeyCode.LeftShift)){
+            isSprinting = true;
+        } else {
+            isSprinting = false;
+        }
+
+        if(isSprinting == true) {
+            speed = sprintSpeed;
+        } else {
+            speed = OGspeed;
+        }
+
+    }
+
+    void CamMovement(){
         //CAMERA ROTATE
-            Vector3 mouseDirection = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0);
-            transform.Rotate(Vector3.up * mouseDirection.x * mouseSensitivity);
-            cameraPitch -= mouseDirection.y * mouseSensitivity;
-            cameraPitch = Mathf.Clamp(cameraPitch, -90.0f, 90.0f);
-            cam.localEulerAngles = Vector3.right * cameraPitch;
+        Vector2 mouseDirection = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, mouseDirection, ref currentMouseDeltaVelocity, mouseSmoothTime);
+        transform.Rotate(Vector3.up * currentMouseDelta.x * mouseSensitivity);
+        cameraPitch -= currentMouseDelta.y * mouseSensitivity;
+        cameraPitch = Mathf.Clamp(cameraPitch, -90.0f, 90.0f);
+        cam.localEulerAngles = Vector3.right * cameraPitch;
             
-        
-        //  if (direction.magnitude >= 0.1f) {
-        //         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        //         //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-        //         //transform.rotation= Quaternion.Euler(0f,angle,0f);
-
-        //         Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-        //         rb.velocity = (moveDir * speed);
-        //  }
     }
 
 }

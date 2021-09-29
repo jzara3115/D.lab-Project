@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -458,8 +458,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752339707}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.173808, y: -1.1, z: -2.37}
-  m_LocalScale: {x: 3.6954, y: 1, z: 3.5481}
+  m_LocalPosition: {x: -26.1, y: -1.1, z: -2.37}
+  m_LocalScale: {x: 9.614022, y: 1, z: 13.897493}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -564,7 +564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 38fc8365da996bb4f92b8ce251834a7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.6
+      value: -1.0999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 38fc8365da996bb4f92b8ce251834a7b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -618,6 +618,7 @@ GameObject:
   - component: {fileID: 1345043229}
   - component: {fileID: 1345043233}
   - component: {fileID: 1345043234}
+  - component: {fileID: 1345043235}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -731,11 +732,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 566b51340b342c542b1259f8bec547e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 7
   cam: {fileID: 963194228}
   mouseSensitivity: 3
-  turnSmoothTime: 0
-  turnSmoothVelocity: 0
+  mouseSmoothVelocity: 0.015
+  mouseSmoothTime: 0.015
+  moveSmoothVelocity: 0.15
+--- !u!143 &1345043235
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345043228}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1584656682
 PrefabInstance:
   m_ObjectHideFlags: 0
