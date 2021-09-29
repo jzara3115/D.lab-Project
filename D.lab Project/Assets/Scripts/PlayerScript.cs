@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
 
     public Transform cam;
     public float mouseSensitivity;
-    private float cameraPitch = 0f;
+    private float cameraPitch = 50f;
     bool lockCursor = true;
     [SerializeField][Range(0.0f,0.5f)]float mouseSmoothVelocity;
     [SerializeField][Range(0.0f,0.5f)]float mouseSmoothTime;
