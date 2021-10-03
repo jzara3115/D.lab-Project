@@ -8,7 +8,6 @@ public class CollectObject : MonoBehaviour
     Rigidbody rb;
     public float Items;
     public Text pickupPrompt; 
-    float promptTime = 1;
 
     void Start()
     {
@@ -26,6 +25,7 @@ public class CollectObject : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E)){
             Items ++;
             col.gameObject.SetActive(false);
+            pickupPrompt.enabled = false;
         }
         }
     }
@@ -34,14 +34,12 @@ public class CollectObject : MonoBehaviour
     	if(col.gameObject.CompareTag("Collectable")){
     		pickupPrompt.enabled = true;
     	}
-    	StartCoroutine("PromptGone");
     }
-
-IEnumerator PromptGone(){
-	    yield return new WaitForSeconds(promptTime);
-    pickupPrompt.enabled = false;
+    void OnTriggerExit(Collider col){
+    	if(col.gameObject.CompareTag("Collectable")){
+    		pickupPrompt.enabled = false;
+    	}
 }
-
 }
 
     
