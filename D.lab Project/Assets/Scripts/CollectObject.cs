@@ -22,7 +22,7 @@ public class CollectObject : MonoBehaviour
 
     void OnTriggerStay(Collider col){
         if(col.gameObject.CompareTag("Collectable")){
-        if(Input.GetKeyDown(KeyCode.E)){
+        if(Input.GetKey(KeyCode.E)){
             Items ++;
             col.gameObject.SetActive(false);
             pickupPrompt.enabled = false;
