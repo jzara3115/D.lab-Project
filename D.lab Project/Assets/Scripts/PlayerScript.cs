@@ -12,6 +12,8 @@ public class PlayerScript : MonoBehaviour
     public bool isSprinting = false;
     float sprintSpeed;
     float OGspeed;
+    public float gravity;
+    float velocityY = 0.0f;
 
     public Transform cam;
     public float mouseSensitivity;
@@ -57,7 +59,14 @@ public class PlayerScript : MonoBehaviour
         moveInput2 = Input.GetAxisRaw("Vertical");
         Vector2 direction = new Vector2(moveInput, moveInput2).normalized;
         currentDir = Vector2.SmoothDamp(currentDir, direction, ref currentDirVelocity, moveSmoothVelocity);
-        Vector3 move = (transform.forward * currentDir.y + transform.right * currentDir.x) * speed;
+
+        if(controller.isGrounded){
+            velocityY=0.0f;
+        }
+
+            velocityY += gravity * Time.deltaTime;
+
+        Vector3 move = (transform.forward * currentDir.y + transform.right * currentDir.x) * speed + Vector3.up * velocityY;
         controller.Move(move * Time.deltaTime);
 
 
