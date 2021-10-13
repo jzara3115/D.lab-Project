@@ -14,6 +14,9 @@ public class PlayerScript : MonoBehaviour
     float OGspeed;
     public float gravity;
     float velocityY = 0.0f;
+    private float jumpHeight = 1.0f;
+    public bool isCrouching = false;
+    float crouchSpeed;
 
     public Transform cam;
     public float mouseSensitivity;
@@ -37,6 +40,7 @@ public class PlayerScript : MonoBehaviour
         controller = GetComponent<CharacterController>();
         OGspeed = speed;
         sprintSpeed = speed * 1.5f;
+        crouchSpeed = speed / 1.5f;
     
         if(lockCursor){
             Cursor.lockState = CursorLockMode.Locked;
@@ -66,21 +70,36 @@ public class PlayerScript : MonoBehaviour
 
             velocityY += gravity * Time.deltaTime;
 
+            if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        {
+            velocityY += Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+        }
+
         Vector3 move = (transform.forward * currentDir.y + transform.right * currentDir.x) * speed + Vector3.up * velocityY;
         controller.Move(move * Time.deltaTime);
 
 
-        if(Input.GetKey(KeyCode.LeftShift)){
+        if(Input.GetKeyDown(KeyCode.LeftShift)){
             isSprinting = true;
-        } else {
-            isSprinting = false;
-        }
-
-        if(isSprinting == true) {
             speed = sprintSpeed;
-        } else {
+        } 
+        if(Input.GetKeyUp(KeyCode.LeftShift)) {
+            isSprinting = false;
             speed = OGspeed;
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl)){
+            isCrouching = true;
+            speed = crouchSpeed;
+            controller.height = 1f;
+        } 
+        if(Input.GetKeyUp(KeyCode.LeftControl)) {
+            isCrouching = false;
+             speed = OGspeed;
+             controller.height = 2f;
+        }
+
+         
 
     }
 
