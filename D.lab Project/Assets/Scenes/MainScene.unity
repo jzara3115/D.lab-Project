@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.12167532, g: 0.14230928, b: 0.18786165, a: 1}
+  m_IndirectSpecularColor: {r: 0.12167523, g: 0.14230925, b: 0.18786159, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4200,6 +4200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Smoke
       objectReference: {fileID: 0}
+    - target: {fileID: 8691441578534027139, guid: 452b930afdfa8f940b5d2c90498bc2db, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: da98596b67943554fb282487015411e7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 452b930afdfa8f940b5d2c90498bc2db, type: 3}
 --- !u!1 &307286462 stripped
