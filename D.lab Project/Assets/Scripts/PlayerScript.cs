@@ -88,12 +88,12 @@ public class PlayerScript : MonoBehaviour
             speed = OGspeed;
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftControl)){
+        if(Input.GetKeyDown(KeyCode.C)){
             isCrouching = true;
             speed = crouchSpeed;
             controller.height = 1f;
         } 
-        if(Input.GetKeyUp(KeyCode.LeftControl)) {
+        if(Input.GetKeyUp(KeyCode.C)) {
             isCrouching = false;
              speed = OGspeed;
              controller.height = 2f;
