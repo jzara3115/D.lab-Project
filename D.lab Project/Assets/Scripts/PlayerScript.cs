@@ -30,8 +30,6 @@ public class PlayerScript : MonoBehaviour
     [SerializeField][Range(0.0f,0.5f)]float moveSmoothVelocity = 0.3f;
     Vector2 currentDir = Vector2.zero;
     Vector2 currentDirVelocity = Vector2.zero;
-    
-
 
 
     void Start()
