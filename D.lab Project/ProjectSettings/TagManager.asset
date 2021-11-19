@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Collectable
   - Text
+  - Checkpoint
+  - Death
+  - Switch
   layers:
   - Default
   - TransparentFX
