@@ -10,6 +10,9 @@ public class Switch : MonoBehaviour
     private AudioSource ss;
     [SerializeField]
     private AudioClip clip;
+    [SerializeField]
+    private float vol;
+
 
     void Awake(){
         ss = GetComponent<AudioSource>();
@@ -17,7 +20,6 @@ public class Switch : MonoBehaviour
 
     void Update(){
         if (on==true){
-        ss.PlayOneShot(clip);
         ObjectsToDestroy[currentActiveIndex].SetActive(false);
         currentActiveIndex++;
     if (currentActiveIndex >= ObjectsToDestroy.Count)
@@ -29,6 +31,7 @@ public class Switch : MonoBehaviour
         if(col.gameObject.CompareTag("Player") && on == false){
         if(Input.GetKey(KeyCode.E)){
         on = true;
+        ss.PlayOneShot(clip, vol);
     }
     }
     }
