@@ -13,7 +13,7 @@ public class CollectObject : MonoBehaviour
     private AudioClip clip;
     private SphereCollider sphere;
 
-    public float fadeSpeed;
+    private float fadeSpeed;
     Renderer fade;
 
     void Start()
@@ -22,6 +22,8 @@ public class CollectObject : MonoBehaviour
         ss = GetComponent<AudioSource>();
         fade = this.GetComponent<Renderer>();
         sphere = GetComponent<SphereCollider>();
+
+        fadeSpeed = 0.4f;
     }
 
 
@@ -34,9 +36,9 @@ public class CollectObject : MonoBehaviour
     void OnTriggerStay(Collider col){
         if(col.gameObject.CompareTag("Player")){
         if(Input.GetKey(KeyCode.E)){
-            sphere.radius = 0f;
+            PlayerScript.Items ++;
+            sphere.enabled = !sphere.enabled;
             ss.PlayOneShot(clip, 0.2f);
-            Items ++;
             pickupPrompt.enabled = false;
             StartCoroutine(FadeOut());
             StartCoroutine(Wait());

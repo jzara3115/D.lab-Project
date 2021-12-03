@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
     public float speed;
     private float moveInput;
     private float moveInput2;
-    CharacterController controller;
+    public CharacterController controller;
     public bool isSprinting = false;
     float sprintSpeed;
     float OGspeed;
@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     private float jumpHeight = 1.0f;
     public bool isCrouching = false;
     float crouchSpeed;
+    public static int Items;
 
     public Transform cam;
     public float mouseSensitivity;
@@ -28,7 +29,7 @@ public class PlayerScript : MonoBehaviour
     Vector2 currentMouseDeltaVelocity = Vector2.zero;
 
     [SerializeField][Range(0.0f,0.5f)]float moveSmoothVelocity = 0.3f;
-    Vector2 currentDir = Vector2.zero;
+    public Vector2 currentDir = Vector2.zero;
     Vector2 currentDirVelocity = Vector2.zero;
 
 
@@ -77,26 +78,28 @@ public class PlayerScript : MonoBehaviour
         controller.Move(move * Time.deltaTime);
 
 
-        if(Input.GetKeyDown(KeyCode.LeftShift)){
+        if(Input.GetKeyDown(KeyCode.LeftShift)&&isCrouching==false){
             isSprinting = true;
             speed = sprintSpeed;
         } 
-        if(Input.GetKeyUp(KeyCode.LeftShift)) {
+        if(Input.GetKeyUp(KeyCode.LeftShift)&&isSprinting == true) {
             isSprinting = false;
             speed = OGspeed;
         }
 
         if(Input.GetKeyDown(KeyCode.C)){
             isCrouching = true;
+            isSprinting = false;
             speed = crouchSpeed;
             controller.height = 1f;
         } 
         if(Input.GetKeyUp(KeyCode.C)) {
             isCrouching = false;
+            isSprinting = false;
              speed = OGspeed;
              controller.height = 2f;
         }
-
+    Debug.Log(speed);
          
 
     }
