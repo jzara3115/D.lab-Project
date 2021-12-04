@@ -98,9 +98,7 @@ public class PlayerScript : MonoBehaviour
             isSprinting = false;
              speed = OGspeed;
              controller.height = 2f;
-        }
-    Debug.Log(speed);
-         
+        }         
 
     }
 
