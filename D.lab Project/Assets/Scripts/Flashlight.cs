@@ -10,21 +10,28 @@ public class Flashlight : MonoBehaviour
     public GameObject Light;
     public bool collected = false;
     public bool on = true;
+    private AudioSource ss;
+    public AudioClip clip;
+    public AudioClip turning;
 
     void Start()
     {
         sc = GetComponent<SphereCollider>();
+        ss = GetComponent<AudioSource>();
+
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)&&collected == true){
+        if (Input.GetKeyDown(KeyCode.Mouse0)&&collected == true){
             if(on){
                 Light.SetActive(false);
                 on = false;
+                ss.PlayOneShot(turning, 0.5f);
             } else{
                 Light.SetActive(true);
-                on = true;
+                on = true;   
+                ss.PlayOneShot(turning, 0.5f);
             }
     }
 
@@ -38,6 +45,7 @@ public class Flashlight : MonoBehaviour
             gameObject.transform.parent = playerface.transform;
             gameObject.transform.position = playerface.transform.position;
             gameObject.transform.rotation = playerface.transform.rotation;
+            ss.PlayOneShot(clip, 0.5f);
             Debug.Log("Flashlight");
         }
     	}
