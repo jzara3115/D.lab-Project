@@ -1,4 +1,3 @@
-// Developed as a part of World of Zero: https://youtu.be/b4utgRuIekk
 Shader "Custom/RevealingShader" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
@@ -10,6 +9,7 @@ Shader "Custom/RevealingShader" {
 		_LightPosition("Light Position", Vector) = (0,0,0,0)
 		_LightAngle("Light Angle", Range(0,180)) = 45
 		_StrengthScalar("Strength", Float) = 50
+		_LightRange("Light Range", Float) = 0
 	}
 	SubShader {
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
@@ -37,12 +37,14 @@ Shader "Custom/RevealingShader" {
 		float4 _LightDirection;
 		float _LightAngle;
 		float _StrengthScalar;
+		float _LightRange; 
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
 			float3 direction = normalize(_LightPosition - IN.worldPos);
 			float scale = dot(direction, _LightDirection);
 			float strength = scale - cos(_LightAngle * (3.14 / 360.0));
 			strength = min(max(strength * _StrengthScalar, 0), 1);
+			float distanceAttenunation = 1 - saturate(distance(_LightPosition, IN.worldPos) / _LightRange);
 			// Albedo comes from a texture tinted by color
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
 			o.Albedo = c.rgb;
@@ -50,7 +52,7 @@ Shader "Custom/RevealingShader" {
 			// Metallic and smoothness come from slider variables
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
-			o.Alpha = strength * c.a ;
+			o.Alpha = strength  * distanceAttenunation * c.a;
 		}
 		ENDCG
 	}
