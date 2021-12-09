@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Flashlight : MonoBehaviour
 {
     
@@ -13,6 +14,9 @@ public class Flashlight : MonoBehaviour
     private AudioSource ss;
     public AudioClip clip;
     public AudioClip turning;
+
+    public Material reveal;
+    public Light m_light;
 
     void Start()
     {
@@ -33,6 +37,9 @@ public class Flashlight : MonoBehaviour
                 on = true;   
                 ss.PlayOneShot(turning, 0.5f);
             }
+            reveal.SetVector("_LightPosition", m_light.transform.position);
+            reveal.SetVector("_LightDirection", -m_light.transform.forward);
+            reveal.SetFloat("_LightAngle", m_light.spotAngle);
     }
 
 }
