@@ -78,14 +78,23 @@ public class PlayerScript : MonoBehaviour
         controller.Move(move * Time.deltaTime);
 
 
-        if(Input.GetKeyDown(KeyCode.LeftShift)&&isCrouching==false){
+        if(Input.GetKeyDown(KeyCode.LeftShift)){
             isSprinting = true;
             speed = sprintSpeed;
         } 
-        if(Input.GetKeyUp(KeyCode.LeftShift)&&isSprinting == true) {
+        if(Input.GetKeyUp(KeyCode.LeftShift)) {
             isSprinting = false;
             speed = OGspeed;
         }
+
+        // if(Input.GetKeyDown(KeyCode.LeftShift)&&isCrouching==false){
+        //     isSprinting = true;
+        //     speed = sprintSpeed;
+        // } 
+        // if(Input.GetKeyUp(KeyCode.LeftShift)&&isSprinting == true) {
+        //     isSprinting = false;
+        //     speed = OGspeed;
+        // }
 
         if(Input.GetKeyDown(KeyCode.C)){
             isCrouching = true;
